@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Kewen Blogs - 科文的博客网站</title><meta name="author" content="kewen"><meta name="copyright" content="kewen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="使用Hexo静态部署网站">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kewen Blogs">
+<meta property="og:url" content="http://blog.liukewen.cn/index.html">
+<meta property="og:site_name" content="Kewen Blogs">
+<meta property="og:description" content="使用Hexo静态部署网站">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg">
+<meta property="article:author" content="kewen">
+<meta property="article:tag" content="Java,Spring,Meven,Spring Security,Web,pve">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg"><link rel="shortcut icon" href="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"><link rel="canonical" href="http://blog.liukewen.cn/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml;","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Kewen Blogs',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-01-11 22:57:28'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Kewen Blogs"><img class="site-icon" src="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"/><span class="site-name">Kewen Blogs</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Kewen Blogs</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2024/27K9TJT.html" title="WebService"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WebService"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/27K9TJT.html" title="WebService">WebService</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="content">1. 定义1.1. WebService简介Web Service技术， 能使得运行在不同机器上的不同应用无须借助附加的、专门的第三方软件或硬件， 就可相互交换数据或集成。依据Web Service规范实施的应用之间， 无论它们所使用的语言、 平台或内部协议是什么， 都可以相互交换数据。
+简单的说，WebService就是一种跨编程语言和跨操作系统平台的远程调用技术。所谓跨编程语言和跨操作平台，就是说服务端程序采用java编写，客户端程序则可以采用其他编程语言编写，反之亦然。跨操作系统平台则是指服务端程序和客户端程序可以在不同的操作系统上运行。 远程调用，就是一台计算机的应用可以调用其他计算机上的应用。例如：支付宝，支付宝并没有银行卡等数据，它只是去调用银行提供的接口来获得数据。还有天气预报等，也是气象局把自己的系统服务以webservice服务的形式暴露出来，让第三方网站和程序可以调用这些服务功能。
+1.2. WebService原理XML,SOAP和WSDL就是构成WebService平台的三大技术 。
+WebService采用Http协议来在客户端和服务端之间传输数据。WebSe ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2024/22GPJSD.html" title="状态码"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="状态码"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/22GPJSD.html" title="状态码">状态码</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="content">状态码100 系列200 系列300 系列
+301 永久重定向。浏览器会永久缓存两个链接的关系，当再次访问第一个时直接访问后面的接口
+302 临时重定向。浏览器不缓存关系，每次调用都会由后台重定向
+
+引用
+</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2024/3SHHMAN.html" title="网络问题解决"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="网络问题解决"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/3SHHMAN.html" title="网络问题解决">网络问题解决</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="content">java忽略证书验证(兼容http，https)链接
+解决http会被重定向为https的问题在将服务尝试着从http协议往https协议迁移成功之后，又出于测试调试的目的将服务转回到http协议，却发现在浏览器输入http会被自动跳转到https。
+
+HTTP Strict Transport Security (HSTS) is an opt-in security enhancement that is specified by a web application through the use of a special response header. Once a supported browser receives this header that browser will prevent any communications from being sent over HTTP to the specified domain and will instead send all communications over HTTPS.
+
+查阅相关资料，发现这是浏览器的HSTS（H ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2024/3JAVJ2E.html" title="1-数据7层"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="1-数据7层"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/3JAVJ2E.html" title="1-数据7层">1-数据7层</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-11T12:13:31.343Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="content">七层应用层表示层会话层传输层网络层数据链路层物理层
+四层
+物理层两台电脑连接水晶头1-3 2-6交叉法（12收数据 36发数据）
+集线器Hub工作层：集线器全部转发数据
+数据链路层
+解决的问题
+1231.这个包是发给谁的？谁应该接收？2.大家都在发，会不会产生混乱？有没有谁先发、谁后发的规则？3.如果发送的时候出现了错误，怎么办？
+
+MAC**MAC(Medium Access Controller)**： 控制往媒体数据发送的先后顺序
+信道划分轮流协议随机接入
+MAC地址:也叫做链路层地址
+格式：目标MAC|源MAC|类型|数据|校验位
+
+网卡根据MAC地址判定是否应该是自己收的；
+1有了这个目标 MAC 地址，数据包在链路上广播，MAC 的网卡才能发现，这个包是给它的。MAC 的网卡把包收进来，然后打开 IP 包，发现 IP 地址也是自己的，再打开 TCP 包，发现端口是自己，也就是 80，而 nginx 就是监听 80。于是将请求提交给 nginx，nginx 返回一个网页。然后将网页需要发回请求的机器。然后层层封装，最后到 MAC 层。因为来的时候有源 MAC 地址，返回的时候 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2024/24SEDF0.html" title="URL-DNS"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="URL-DNS"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/24SEDF0.html" title="URL-DNS">URL-DNS</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-11T12:13:31.343Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="content">配置网络域名规则使用A记录，再由Nginx转发，不要使用 域名自带的URL转发
+
+A记录——适应于独立主机、有固定IP地址  
+  WEB服务器的IP指向A (Address) 记录是用来指定主机名（或域名）对应的IP地址记录。说明：用户能够将该域名下的网站服务器指向到本身的web server上。同时也能够设置本身域名的二级域名。就是说：经过A记录，你们能够设置本身的不一样域名转到不一样的IP上去！如：将www.yourname.com 转到IP 321.32.321.321ftp.yourname.com 转到IP 123.12.123.123mail.yourname.com 转到IP 213.21.213.213浏览器
+
+CNAME——适应于虚拟主机、变更IP地址主机  
+  CNAME (Canonical Name)记录，(alias from one domain name to another)一般称别名指向
+
+
+这是个挺好用记录，它能够将你注册的不一样域名通通转到一个主域名上去！与A记录不一样的是，CNAME别名记录设置的能够是一个域名的描述而不必定是IP地址！有什么 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2024/2GYRYHN.html" title="小技巧方法"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小技巧方法"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/2GYRYHN.html" title="小技巧方法">小技巧方法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-11T12:13:31.342Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a></span></div><div class="content">1. Spring相关获取所有依赖包classpath中的Resource和Properties
+12345678910111213//java.lang.util中的，java原生方法   //getResources的参数为 &quot;META-INF/spring.factories&quot;  也就是classpath下的路径Enumeration&lt;URL&gt; urls = (classLoader != null ?classLoader.getResources(FACTORIES_RESOURCE_LOCATION) :ClassLoader.getSystemResources(FACTORIES_RESOURCE_LOCATION));//循环获取urlwhile (urls.hasMoreElements()) &#123;    //得到一个url    URL url = urls.nextElement();    //创建一个resource 这里的UrlResource就是spring-core中的方法了    UrlResource res ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2024/4MCW5R.html" title="0-模板"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="0-模板"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/4MCW5R.html" title="0-模板">0-模板</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-11T12:13:31.317Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a></span></div><div class="content">1. 目录[TOC]
+2. 说明3. 依赖分析4. 源码分析5. 总结6. 注意事项</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2024/2BC58YR.html" title="hexo主题"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hexo主题"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/2BC58YR.html" title="hexo主题">hexo主题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-10T16:00:00.000Z" title="发表于 2024-01-11 00:00:00">2024-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/web/">web</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/web/hexo/">hexo</a></span></div><div class="content">目录[IOT]
+正文butterfly主题
+主题官方地址
+安装
+安装安装有两种方式，个人觉得使用克隆方式加载到主题文件夹themes比较直观
+git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly
+npm i hexo-theme-butterfly
+
+
+修改_config.yml修改themes: butterfly
+打包启动
+
+注意：安装好之后启动可能会报错extends includes/layout.pug block content include ./includes/mixins/post-ui.pug #recent-posts.recent-posts +postUI include includes/pagination.pug
+需要安装依赖npm install hexo-renderer-pug hexo-renderer-stylus --save
+主题配置在 hexo 的根目錄創建一個文件 _config.butterfly.yml， ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2024/1D3ZCBN.html" title="hexo插件"><img class="post-bg" src="http://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hexo插件"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/1D3ZCBN.html" title="hexo插件">hexo插件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-10T16:00:00.000Z" title="发表于 2024-01-11 00:00:00">2024-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/web/">web</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/web/hexo/">hexo</a></span></div><div class="content">目录[IOT]
+正文
+hexo-enhancer 分类、标签、标题生成插件
+
+安装npm install hexo-deployer-git --save
+
+配置 在_config.yml中配置
+  12345deploy:   type: git   repo: &lt;仓库链接&gt; # 可以是 https 链接也可以是 git 链接   branch: [分支] # GitHub 的网站分支为 gh-pages，其他网站可能有所不同   message: [message] # 默认是 Site updated: &#123;&#123; now(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) &#125;&#125;
+
+
+hexo-word-counter 字数统计插件
+
+安装npm install hexo-word-counter --save
+
+配置 在_config.yml中配置
+  1234567891011# hexo-word-counter## https://github.com/next-theme/hexo-word-countersy ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2024/1ESTCN2.html" title="hexo搭建部署github"><img class="post-bg" src="http://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hexo搭建部署github"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/1ESTCN2.html" title="hexo搭建部署github">hexo搭建部署github</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-08T16:00:00.000Z" title="发表于 2024-01-09 00:00:00">2024-01-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/web/">web</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/web/hexo/">hexo</a></span></div><div class="content">搭建本地证书
+查看本地是否已有SSHKEY查看当前用户目录下是否有.ssh文件ls -la ~/.ssh ，刚开始是没有id_rsa和id_rsa.pub
+生成ssh指纹、ssh-keygen -t rsa -b 4096 -C &quot;你的邮箱地址&quot;
+添加ssh到ssh-agent中eval &quot;$(ssh-agent -s)&quot;
+查看是否已有id_rsa和id_rsa.pub，id_rsa.pub为公钥后续会使用
+
+github 仓库搭建新建一个仓库，仓库名为自己的&#123;账号名&#125;.github.io，必须为自己的账号名，否则访问不了。如 我的账户名为LiuKewenSC，那么我只能创建liukewensc.github.io的仓库，如下图：
+
+配置SSH_Key
+在右上角个人头像处单机进入菜单，选择settings，点击SSH and GPG keys，点击Add new SSH Key，title随便填，keytype默认 AuthenticationKey，Key填写上面证书的公钥，确定提交。
+Hexo 安装
+首先下载安装Node  ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#content-inner">10</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">kewen</div><div class="author-info__description">使用Hexo静态部署网站</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/27K9TJT.html" title="WebService"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WebService"/></a><div class="content"><a class="title" href="/2024/27K9TJT.html" title="WebService">WebService</a><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/22GPJSD.html" title="状态码"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="状态码"/></a><div class="content"><a class="title" href="/2024/22GPJSD.html" title="状态码">状态码</a><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/3SHHMAN.html" title="网络问题解决"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="网络问题解决"/></a><div class="content"><a class="title" href="/2024/3SHHMAN.html" title="网络问题解决">网络问题解决</a><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/3JAVJ2E.html" title="1-数据7层"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="1-数据7层"/></a><div class="content"><a class="title" href="/2024/3JAVJ2E.html" title="1-数据7层">1-数据7层</a><time datetime="2024-01-11T12:13:31.343Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/24SEDF0.html" title="URL-DNS"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="URL-DNS"/></a><div class="content"><a class="title" href="/2024/24SEDF0.html" title="URL-DNS">URL-DNS</a><time datetime="2024-01-11T12:13:31.343Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/"><span class="card-category-list-name">Framework框架</span><span class="card-category-list-count">60</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/Mybatis/"><span class="card-category-list-name">Mybatis</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/Oauth2/"><span class="card-category-list-name">Oauth2</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/"><span class="card-category-list-name">SpringCloud</span><span class="card-category-list-count">25</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/"><span class="card-category-list-name">SpringCloudAlibaba</span><span class="card-category-list-count">19</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/Cloud/"><span class="card-category-list-name">Cloud</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/Nacos/"><span class="card-category-list-name">Nacos</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/Seata/"><span class="card-category-list-name">Seata</span><span class="card-category-list-count">1</span></a></li></ul></li></ul></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Java/" style="font-size: 1.45em; color: rgb(42, 74, 21)">Java</a><a href="/tags/Spring/" style="font-size: 1.38em; color: rgb(99, 152, 178)">Spring</a><a href="/tags/Web/" style="font-size: 1.3em; color: rgb(78, 120, 155)">Web</a><a href="/tags/Spring-Security/" style="font-size: 1.22em; color: rgb(39, 54, 105)">Spring Security</a><a href="/tags/pve/" style="font-size: 1.15em; color: rgb(0, 115, 4)">pve</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">16</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">26</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/07/"><span class="card-archive-list-date">七月 2023</span><span class="card-archive-list-count">25</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/05/"><span class="card-archive-list-date">五月 2023</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/01/"><span class="card-archive-list-date">一月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">94</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-01-11T14:57:27.505Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By kewen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div></body></html>

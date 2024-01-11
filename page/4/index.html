@@ -1,0 +1,249 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Kewen Blogs - 科文的博客网站</title><meta name="author" content="kewen"><meta name="copyright" content="kewen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="使用Hexo静态部署网站">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kewen Blogs">
+<meta property="og:url" content="http://blog.liukewen.cn/page/4/index.html">
+<meta property="og:site_name" content="Kewen Blogs">
+<meta property="og:description" content="使用Hexo静态部署网站">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg">
+<meta property="article:author" content="kewen">
+<meta property="article:tag" content="Java,Spring,Meven,Spring Security,Web,pve">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg"><link rel="shortcut icon" href="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"><link rel="canonical" href="http://blog.liukewen.cn/page/4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml;","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Kewen Blogs',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-01-11 22:57:28'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Kewen Blogs"><img class="site-icon" src="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"/><span class="site-name">Kewen Blogs</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Kewen Blogs</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2023/24PA9PS.html" title="Springboot springboot生命周期扩展"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Springboot springboot生命周期扩展"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/24PA9PS.html" title="Springboot springboot生命周期扩展">Springboot springboot生命周期扩展</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-22T16:00:00.000Z" title="发表于 2023-11-23 00:00:00">2023-11-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/">Spring合集</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/Spring%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95/">Spring功能扩展</a></span></div><div class="content">1. 说明springboot的生命周期主要在springboot启动容器阶段的扩展，从容器刷新开始主要就是spring相关的扩展了
+看过springboot源码就应该知道，我们从pringApplication.run()启动springboot工程，其有一个初始化器、监听器、一个异常报告器同时，springboot还支持在启动之后执行初始化方法，相当于在容器启动之后执行方法， 防止方法报错导致容器起不来
+2. 扩展2.1. 初始化器ApplicationContextInitializer初始化器在上下文设置好环境变量之后执行，在这里可以操作环境变量相关信息；实际上类信息是spring的相关扩展，只是springboot在启动时会加载这个扩展
+ApplicationContextInitializer有道翻译：这里封装了配置和生命周期方法，以避免让ApplicationContext客户端代码明显看到它们。目前的方法应该只用于启动和关闭代码。
+2.1.1. 使用首先实现ApplicationContextInitializer，然后在classpath:META-INF/sprin ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/VPEWYF.html" title="1 springboot启动流程分析"><img class="post-bg" src="http://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="1 springboot启动流程分析"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/VPEWYF.html" title="1 springboot启动流程分析">1 springboot启动流程分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-21T16:00:00.000Z" title="发表于 2023-11-22 00:00:00">2023-11-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/">Spring合集</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/springboot%E6%BA%90%E7%A0%81/">springboot源码</a></span></div><div class="content">1. 目录[TOC]
+2. 说明springboot 是一个脚手架，主要用于初始化spring相关的配置，以及根据约定的格式快速配置约定优于配置是其主要思想
+3. 依赖分析4. 源码分析4.1. 主入口SpringApplication.run()123public static void main(String[] args) &#123;    SpringApplication.run(D7SpringbootSourceApp.class, args);&#125;
+
+直接进入SpringApplication创建
+1234567public static ConfigurableApplicationContext run(Class&lt;?&gt; primarySource, String... args) &#123;    return run(new Class&lt;?&gt;[] &#123; primarySource &#125;, args);&#125;public static ConfigurableApplicationContext run(C ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/1MBV71D.html" title="3 springmvc初始化请求适配器HandlerAdaptor"><img class="post-bg" src="http://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="3 springmvc初始化请求适配器HandlerAdaptor"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/1MBV71D.html" title="3 springmvc初始化请求适配器HandlerAdaptor">3 springmvc初始化请求适配器HandlerAdaptor</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-20T16:00:00.000Z" title="发表于 2023-11-21 00:00:00">2023-11-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/">Spring合集</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/springmvc%E6%BA%90%E7%A0%81/">springmvc源码</a></span></div><div class="content">1. 目录[TOC]
+2. 说明请求适配器主要是处理返回数据的格式问题，即Controller返回的数据对象是视图还是数据，或对数据格式化等
+3. 依赖分析4. 源码分析从springmvc启动流程可以知道，springmvc请求适配是在initHandlerAdapters()中初始化的
+4.1. initHandlerAdapters()123456789101112131415161718192021222324252627282930313233private void initHandlerAdapters(ApplicationContext context) &#123;    this.handlerAdapters = null;    if (this.detectAllHandlerAdapters) &#123;        //从容器中获取到对应的适配器（其默认加载位置同HandlerMapping一样，当配置&lt;mvc:annotation-driven&gt;的时候会加载默认，没有配置注解驱动，查询出来为空， 则会走后面getDefaultStrat ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/1TRHZMG.html" title="4 springmvc初始化异常解析器HandlerExceptionResolver"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="4 springmvc初始化异常解析器HandlerExceptionResolver"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/1TRHZMG.html" title="4 springmvc初始化异常解析器HandlerExceptionResolver">4 springmvc初始化异常解析器HandlerExceptionResolver</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-20T16:00:00.000Z" title="发表于 2023-11-21 00:00:00">2023-11-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/">Spring合集</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/springmvc%E6%BA%90%E7%A0%81/">springmvc源码</a></span></div><div class="content">1. 目录[TOC]
+2. 说明异常解析器在发生异常的时候解析组装异常返回
+3. 依赖分析4. 源码分析初始化异常解析器依然是在DispatchServlet#initStrategies()中完成的，方法为initHandlerExceptionResolvers()
+4.1. initHandlerExceptionResolvers()和前面一样，当配置&lt;mvc:annotation-driven&gt;的时候会加载默认，没有配置注解驱动，查询出来为空， 则会走后面getDefaultStrategies()
+123456789101112131415161718192021222324252627282930313233private void initHandlerExceptionResolvers(ApplicationContext context) &#123;    this.handlerExceptionResolvers = null;    if (this.detectAllHandlerExceptionResolvers) &#123;      ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/MNNT6H.html" title="5 springmvc初始化拦截器Interceptor"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="5 springmvc初始化拦截器Interceptor"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/MNNT6H.html" title="5 springmvc初始化拦截器Interceptor">5 springmvc初始化拦截器Interceptor</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-20T16:00:00.000Z" title="发表于 2023-11-21 00:00:00">2023-11-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/">Spring合集</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/springmvc%E6%BA%90%E7%A0%81/">springmvc源码</a></span></div><div class="content">1. 目录[TOC]
+2. 说明前面springmvc启动流程已经分析到了拦截器是使用InterceptorsBeanDefinitionParser解析器来解析的
+3. 依赖分析4. 源码分析4.1. xml说明在spring中配置了&lt;mvc:interceptors&gt; 标签的会在此解析器中解析得到MappedInterceptor包装类解析器支持解析三种标签bean,ref,interceptor，从后面源码可以看出来
+12345678910111213&lt;mvc:interceptors&gt;    &lt;!--在这里创建一个拦截器bean--&gt;    &lt;bean class=&quot;com.kewen.interceptor.GlobalInterceptor&quot;/&gt;    &lt;!--引用已有的bean--&gt;    &lt;ref bean=&quot;globalInterceptor&quot;/&gt;    &lt;!--配置条件拦截器--&gt;    &lt;mvc:interceptor&gt;      ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/3QY0ZC0.html" title="6 springmvc请求访问流程"><img class="post-bg" src="http://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="6 springmvc请求访问流程"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/3QY0ZC0.html" title="6 springmvc请求访问流程">6 springmvc请求访问流程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-20T16:00:00.000Z" title="发表于 2023-11-21 00:00:00">2023-11-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/">Spring合集</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/springmvc%E6%BA%90%E7%A0%81/">springmvc源码</a></span></div><div class="content">1. 目录[TOC]
+2. 说明springmvc的访问流程主要从DispatcherServlet#doDispatch开始的,Tomcat:org.apache.catalina.ApplicationFilterChain#coreApplicationFilterChain() -&gt; Java:javax.servlet.http.HttpServlet#service()-&gt; springmvc:FrameworkServlet#Service -&gt; springmvc:DistpatcherServlet#doDispatch()
+3. 依赖分析4. 源码分析主要是从DistpatcherServlet#doDispathcer()开始正式进入流程
+4.1. doDispathcer()123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869protecte ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/26VX39K.html" title="2 springmvc初始化请求映射器handlerMappiings"><img class="post-bg" src="http://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="2 springmvc初始化请求映射器handlerMappiings"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/26VX39K.html" title="2 springmvc初始化请求映射器handlerMappiings">2 springmvc初始化请求映射器handlerMappiings</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-16T16:00:00.000Z" title="发表于 2023-11-17 00:00:00">2023-11-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/">Spring合集</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/springmvc%E6%BA%90%E7%A0%81/">springmvc源码</a></span></div><div class="content">1. 目录[TOC]
+2. 说明请求映射器主要是将url映射成应用中的执行对象，一般我们项目中是通过RequestMappingHandlerMapping映射Controller
+3. 依赖分析4. 源码分析从springmvc启动流程可以知道，springmvc请求映射是在initHandlerMappings()中初始化的
+4.1. initHandlerMappings()1234567891011121314151617181920212223242526272829303132333435private void initHandlerMappings(ApplicationContext context) &#123;		this.handlerMappings = null;        //是否检测容器中的bean，默认为true		if (this.detectAllHandlerMappings) &#123;            //这里从容器中获取HandlerMapping对应的bean，由于在容器加载spring-mvc.xml的时候默认设置了两个值（ ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/1Q0ZCC3.html" title="1 springmvc启动流程"><img class="post-bg" src="http://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="1 springmvc启动流程"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/1Q0ZCC3.html" title="1 springmvc启动流程">1 springmvc启动流程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-16T16:00:00.000Z" title="发表于 2023-11-17 00:00:00">2023-11-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/">Spring合集</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/Spring%E5%90%88%E9%9B%86/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/springmvc%E6%BA%90%E7%A0%81/">springmvc源码</a></span></div><div class="content">1. 目录[TOC]
+2. 说明本文分析springmvc的启动过程，spring的启动前面已经分析了，此处就默认spring启动流程已经OK
+3. 流程分析
+首先spring通过 ContextLoaderListener实现tomcat调用的javax.util.EventListener.ServletContextListener来启动spring容器ApplicationContext
+启动完成后继续执行tomcat的方法
+然后 springmvc 通过 DispatcherServlet实现tomcat 的HttpServlet来启动spring-mvc的容器ApplicationContext，初始化完成之前会创建初始化完成事件监听器，
+springmvc监听事件，容器初始化后执行监听方法，初始化springmvc的九大组件
+
+
+4. 源码分析4.1. spring 启动tomcat初始化时会调用StandardContext#listenerStart()下的ServletContextListener#contextInitialized()方法，而web.xml配置 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/2MPKHWW.html" title="gitee使用自动部署"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="gitee使用自动部署"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/2MPKHWW.html" title="gitee使用自动部署">gitee使用自动部署</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-14T16:00:00.000Z" title="发表于 2023-11-15 00:00:00">2023-11-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></span></div><div class="content">1. 开通开通gitgo 就行了，会有每个月2000分钟的免费时长，够用的了
+
+
+选择创建分支，默认创建三个分支
+
+2. 配置以master为例
+默认有编译和发布两个流程
+
+2.1. maven构建流程
+
+名称和jdk版本一般不用管
+
+暂存构建物，这里默认
+
+私有仓库这里看是否用了自己的私有仓库，若有则需要添加配置，无则不管私有仓库这，第一次点击添加证书，
+
+跳转之后点击创建凭证
+选择Maven Settins
+补全信息，这里主要是输入好maven仓库的地址和访问maven的账号密码，仓库作用域选择好需要部署的工程
+回到流水线maven配置这里，将添加好的私有仓库选中，就可以了
+
+
+构建缓存这里不选也不影响啥
+
+
+2.2. 上传制品上传制品这里主要选择上传文件，选择上一步maven构建中的暂存构建物唯一标识，制品名称为工程名称，后续打包会以此打成压缩包
+
+2.3. 发布发布主要是增加工程版本，生成tag等，这里可以不用
+2.4. 主机部署主机部署主要需要选择好执行的主机组，配置好部署脚本
+
+2.4.1. 添加主机在任务信息 -&gt; 执行主机组 -&gt;添加主机中添加主机
+点击新建 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/13QGQHY.html" title="4 SpringCloudGateway 自定义过滤器"><img class="post-bg" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="4 SpringCloudGateway 自定义过滤器"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/13QGQHY.html" title="4 SpringCloudGateway 自定义过滤器">4 SpringCloudGateway 自定义过滤器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-30T16:00:00.000Z" title="发表于 2023-08-31 00:00:00">2023-08-31</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/">SpringCloud</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudGateway/">SpringCloudGateway</a></span></div><div class="content">1. 序言基本上gateway自带的过滤器都能满足我们的使用，除了使用自带的，我们也可以自定义过滤器实现自己的逻辑
+2. 工程搭建基本步骤不变，只是在配置环节有不一样
+3. 全局过滤器全局过滤器只需要实现GlobalFilter即可，所有的请求都会走此过滤器，用于做全局的事件处理，如权限验证、日志记录、租户校验等……
+12345678910111213141516171819@Componentpublic class LogGlobalFilter implements GlobalFilter &#123;    private static final Logger logger = LoggerFactory.getLogger(RuntimeException.class);    @Override    public Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilterChain chain) &#123;        StopWatch watch = new StopWatch();    ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#content-inner">10</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">kewen</div><div class="author-info__description">使用Hexo静态部署网站</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/27K9TJT.html" title="WebService"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WebService"/></a><div class="content"><a class="title" href="/2024/27K9TJT.html" title="WebService">WebService</a><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/22GPJSD.html" title="状态码"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="状态码"/></a><div class="content"><a class="title" href="/2024/22GPJSD.html" title="状态码">状态码</a><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/3SHHMAN.html" title="网络问题解决"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="网络问题解决"/></a><div class="content"><a class="title" href="/2024/3SHHMAN.html" title="网络问题解决">网络问题解决</a><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/3JAVJ2E.html" title="1-数据7层"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="1-数据7层"/></a><div class="content"><a class="title" href="/2024/3JAVJ2E.html" title="1-数据7层">1-数据7层</a><time datetime="2024-01-11T12:13:31.343Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/24SEDF0.html" title="URL-DNS"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="URL-DNS"/></a><div class="content"><a class="title" href="/2024/24SEDF0.html" title="URL-DNS">URL-DNS</a><time datetime="2024-01-11T12:13:31.343Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/"><span class="card-category-list-name">Framework框架</span><span class="card-category-list-count">60</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/Mybatis/"><span class="card-category-list-name">Mybatis</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/Oauth2/"><span class="card-category-list-name">Oauth2</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/"><span class="card-category-list-name">SpringCloud</span><span class="card-category-list-count">25</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/"><span class="card-category-list-name">SpringCloudAlibaba</span><span class="card-category-list-count">19</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/Cloud/"><span class="card-category-list-name">Cloud</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/Nacos/"><span class="card-category-list-name">Nacos</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/Seata/"><span class="card-category-list-name">Seata</span><span class="card-category-list-count">1</span></a></li></ul></li></ul></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Java/" style="font-size: 1.45em; color: rgb(42, 74, 21)">Java</a><a href="/tags/Spring/" style="font-size: 1.38em; color: rgb(99, 152, 178)">Spring</a><a href="/tags/Web/" style="font-size: 1.3em; color: rgb(78, 120, 155)">Web</a><a href="/tags/Spring-Security/" style="font-size: 1.22em; color: rgb(39, 54, 105)">Spring Security</a><a href="/tags/pve/" style="font-size: 1.15em; color: rgb(0, 115, 4)">pve</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">16</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">26</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/07/"><span class="card-archive-list-date">七月 2023</span><span class="card-archive-list-count">25</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/05/"><span class="card-archive-list-date">五月 2023</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/01/"><span class="card-archive-list-date">一月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">94</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-01-11T14:57:27.505Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By kewen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div></body></html>

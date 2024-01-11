@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>seata 开篇 | Kewen Blogs</title><meta name="author" content="kewen"><meta name="copyright" content="kewen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 序言seat是一个分布式事务协调中心，详细见官方文档 官网 2. Seata 是什么?Seata 是一款开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了 AT、TCC、SAGA 和 XA 事务模式，为用户打造一站式的分布式解决方案。  2.1. AT 模式2.1.1. 前提基于支持本地 ACID 事务的关系型数据库。Java 应用，通过 JDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="seata 开篇">
+<meta property="og:url" content="http://blog.liukewen.cn/2023/30HTRN0.html">
+<meta property="og:site_name" content="Kewen Blogs">
+<meta property="og:description" content="1. 序言seat是一个分布式事务协调中心，详细见官方文档 官网 2. Seata 是什么?Seata 是一款开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了 AT、TCC、SAGA 和 XA 事务模式，为用户打造一站式的分布式解决方案。  2.1. AT 模式2.1.1. 前提基于支持本地 ACID 事务的关系型数据库。Java 应用，通过 JDB">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2023-08-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-11T12:13:31.335Z">
+<meta property="article:author" content="kewen">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"><link rel="canonical" href="http://blog.liukewen.cn/2023/30HTRN0.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml;","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'seata 开篇',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-11 20:13:31'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Kewen Blogs"><img class="site-icon" src="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"/><span class="site-name">Kewen Blogs</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">seata 开篇</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2023-08-29T16:00:00.000Z" title="发表于 2023-08-30 00:00:00">2023-08-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/">Framework框架</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/">SpringCloud</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/">SpringCloudAlibaba</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Framework%E6%A1%86%E6%9E%B6/SpringCloud/SpringCloudAlibaba/Seata/">Seata</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="seata 开篇"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="1-序言"><a href="#1-序言" class="headerlink" title="1. 序言"></a>1. 序言</h1><p>seat是一个分布式事务协调中心，详细见官方文档</p>
+<p><a target="_blank" rel="noopener" href="https://seata.io/zh-cn/docs/overview/what-is-seata.html">官网</a></p>
+<h1 id="2-Seata-是什么"><a href="#2-Seata-是什么" class="headerlink" title="2. Seata 是什么?"></a>2. Seata 是什么?</h1><p>Seata 是一款开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了 AT、TCC、SAGA 和 XA 事务模式，为用户打造一站式的分布式解决方案。</p>
+<p><img src="https://user-images.githubusercontent.com/68344696/145942191-7a2d469f-94c8-4cd2-8c7e-46ad75683636.png" alt="image"></p>
+<h2 id="2-1-AT-模式"><a href="#2-1-AT-模式" class="headerlink" title="2.1. AT 模式"></a>2.1. AT 模式</h2><h3 id="2-1-1-前提"><a href="#2-1-1-前提" class="headerlink" title="2.1.1. 前提"></a>2.1.1. 前提</h3><p>基于支持本地 ACID 事务的关系型数据库。<br>Java 应用，通过 JDBC 访问数据库。</p>
+<h3 id="2-1-2-整体机制"><a href="#2-1-2-整体机制" class="headerlink" title="2.1.2. 整体机制"></a>2.1.2. 整体机制</h3><p>两阶段提交协议的演变：</p>
+<ul>
+<li><p>一阶段：业务数据和回滚日志记录在同一个本地事务中提交，释放本地锁和连接资源。</p>
+</li>
+<li><p>二阶段：</p>
+<ul>
+<li>提交异步化，非常快速地完成。</li>
+<li>回滚通过一阶段的回滚日志进行反向补偿。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-2-写隔离"><a href="#2-2-写隔离" class="headerlink" title="2.2. 写隔离"></a>2.2. 写隔离</h2><ul>
+<li>一阶段本地事务提交前，需要确保先拿到 全局锁 。</li>
+<li>拿不到 全局锁 ，不能提交本地事务。</li>
+<li>拿 全局锁 的尝试被限制在一定范围内，超出范围将放弃，并回滚本地事务，释放本地锁。</li>
+</ul>
+<p>以一个示例来说明：</p>
+<p>两个全局事务 tx1 和 tx2，分别对 a 表的 m 字段进行更新操作，m 的初始值 1000。</p>
+<p>tx1 先开始，开启本地事务，拿到本地锁，更新操作 m &#x3D; 1000 - 100 &#x3D; 900。本地事务提交前，先拿到该记录的 全局锁 ，本地提交释放本地锁。 tx2 后开始，开启本地事务，拿到本地锁，更新操作 m &#x3D; 900 - 100 &#x3D; 800。本地事务提交前，尝试拿该记录的 全局锁 ，tx1 全局提交前，该记录的全局锁被 tx1 持有，tx2 需要重试等待 全局锁 。</p>
+<p><img src="https://img.alicdn.com/tfs/TB1zaknwVY7gK0jSZKzXXaikpXa-702-521.png" alt="1"></p>
+<p>Write-Isolation: Commit</p>
+<p>tx1 二阶段全局提交，释放 全局锁 。tx2 拿到 全局锁 提交本地事务。</p>
+<p>Write-Isolation: Rollback</p>
+<p>如果 tx1 的二阶段全局回滚，则 tx1 需要重新获取该数据的本地锁，进行反向补偿的更新操作，实现分支的回滚。</p>
+<p>此时，如果 tx2 仍在等待该数据的 全局锁，同时持有本地锁，则 tx1 的分支回滚会失败。分支的回滚会一直重试，直到 tx2 的 全局锁 等锁超时，放弃 全局锁 并回滚本地事务释放本地锁，tx1 的分支回滚最终成功。</p>
+<p>因为整个过程 全局锁 在 tx1 结束前一直是被 tx1 持有的，所以不会发生 脏写 的问题。</p>
+<p>读隔离<br>在数据库本地事务隔离级别 读已提交（Read Committed） 或以上的基础上，Seata（AT 模式）的默认全局隔离级别是 读未提交（Read Uncommitted） 。</p>
+<p>如果应用在特定场景下，必需要求全局的 读已提交 ，目前 Seata 的方式是通过 SELECT FOR UPDATE 语句的代理。</p>
+<p>Read Isolation: SELECT FOR UPDATE</p>
+<p>SELECT FOR UPDATE 语句的执行会申请 全局锁 ，如果 全局锁 被其他事务持有，则释放本地锁（回滚 SELECT FOR UPDATE 语句的本地执行）并重试。这个过程中，查询是被 block 住的，直到 全局锁 拿到，即读取的相关数据是 已提交 的，才返回。</p>
+<p>出于总体性能上的考虑，Seata 目前的方案并没有对所有 SELECT 语句都进行代理，仅针对 FOR UPDATE 的 SELECT 语句。</p>
+<p>工作机制<br>以一个示例来说明整个 AT 分支的工作过程。</p>
+<p>业务表：product</p>
+<p>Field	Type	Key<br>id	bigint(20)	PRI<br>name	varchar(100)<br>since	varchar(100)<br>AT 分支事务的业务逻辑：</p>
+<p>update product set name &#x3D; ‘GTS’ where name &#x3D; ‘TXC’;<br>一阶段<br>过程：</p>
+<p>解析 SQL：得到 SQL 的类型（UPDATE），表（product），条件（where name &#x3D; ‘TXC’）等相关的信息。<br>查询前镜像：根据解析得到的条件信息，生成查询语句，定位数据。<br>select id, name, since from product where name &#x3D; ‘TXC’;<br>得到前镜像：</p>
+<p>id	name	since<br>1	TXC	2014<br>执行业务 SQL：更新这条记录的 name 为 ‘GTS’。<br>查询后镜像：根据前镜像的结果，通过 主键 定位数据。<br>select id, name, since from product where id &#x3D; 1;<br>得到后镜像：</p>
+<p>id	name	since<br>1	GTS	2014<br>插入回滚日志：把前后镜像数据以及业务 SQL 相关的信息组成一条回滚日志记录，插入到 UNDO_LOG 表中。<br>{<br>    “branchId”: 641789253,<br>    “undoItems”: [{<br>        “afterImage”: {<br>            “rows”: [{<br>                “fields”: [{<br>                    “name”: “id”,<br>                    “type”: 4,<br>                    “value”: 1<br>                }, {<br>                    “name”: “name”,<br>                    “type”: 12,<br>                    “value”: “GTS”<br>                }, {<br>                    “name”: “since”,<br>                    “type”: 12,<br>                    “value”: “2014”<br>                }]<br>            }],<br>            “tableName”: “product”<br>        },<br>        “beforeImage”: {<br>            “rows”: [{<br>                “fields”: [{<br>                    “name”: “id”,<br>                    “type”: 4,<br>                    “value”: 1<br>                }, {<br>                    “name”: “name”,<br>                    “type”: 12,<br>                    “value”: “TXC”<br>                }, {<br>                    “name”: “since”,<br>                    “type”: 12,<br>                    “value”: “2014”<br>                }]<br>            }],<br>            “tableName”: “product”<br>        },<br>        “sqlType”: “UPDATE”<br>    }],<br>    “xid”: “xid:xxx”<br>}<br>提交前，向 TC 注册分支：申请 product 表中，主键值等于 1 的记录的 全局锁 。<br>本地事务提交：业务数据的更新和前面步骤中生成的 UNDO LOG 一并提交。<br>将本地事务提交的结果上报给 TC。<br>二阶段-回滚<br>收到 TC 的分支回滚请求，开启一个本地事务，执行如下操作。<br>通过 XID 和 Branch ID 查找到相应的 UNDO LOG 记录。<br>数据校验：拿 UNDO LOG 中的后镜与当前数据进行比较，如果有不同，说明数据被当前全局事务之外的动作做了修改。这种情况，需要根据配置策略来做处理，详细的说明在另外的文档中介绍。<br>根据 UNDO LOG 中的前镜像和业务 SQL 的相关信息生成并执行回滚的语句：<br>update product set name &#x3D; ‘TXC’ where id &#x3D; 1;<br>提交本地事务。并把本地事务的执行结果（即分支事务回滚的结果）上报给 TC。<br>二阶段-提交<br>收到 TC 的分支提交请求，把请求放入一个异步任务的队列中，马上返回提交成功的结果给 TC。<br>异步任务阶段的分支提交请求将异步和批量地删除相应 UNDO LOG 记录。<br>附录<br>回滚日志表<br>UNDO_LOG Table：不同数据库在类型上会略有差别。</p>
+<p>以 MySQL 为例：</p>
+<p>Field	Type<br>branch_id	bigint PK<br>xid	varchar(100)<br>context	varchar(128)<br>rollback_info	longblob<br>log_status	tinyint<br>log_created	datetime<br>log_modified	datetime<br>– 注意此处0.7.0+ 增加字段 context<br>CREATE TABLE <code>undo_log</code> (<br>  <code>id</code> bigint(20) NOT NULL AUTO_INCREMENT,<br>  <code>branch_id</code> bigint(20) NOT NULL,<br>  <code>xid</code> varchar(100) NOT NULL,<br>  <code>context</code> varchar(128) NOT NULL,<br>  <code>rollback_info</code> longblob NOT NULL,<br>  <code>log_status</code> int(11) NOT NULL,<br>  <code>log_created</code> datetime NOT NULL,<br>  <code>log_modified</code> datetime NOT NULL,<br>  PRIMARY KEY (<code>id</code>),<br>  UNIQUE KEY <code>ux_undo_log</code> (<code>xid</code>,<code>branch_id</code>)<br>) ENGINE&#x3D;InnoDB AUTO_INCREMENT&#x3D;1 DEFAULT CHARSET&#x3D;utf8;<br>TCC 模式<br>回顾总览中的描述：一个分布式的全局事务，整体是 两阶段提交 的模型。全局事务是由若干分支事务组成的，分支事务要满足 两阶段提交 的模型要求，即需要每个分支事务都具备自己的：</p>
+<p>一阶段 prepare 行为<br>二阶段 commit 或 rollback 行为<br>Overview of a global transaction</p>
+<p>根据两阶段行为模式的不同，我们将分支事务划分为 Automatic (Branch) Transaction Mode 和 Manual (Branch) Transaction Mode.</p>
+<p>AT 模式（参考链接 TBD）基于 支持本地 ACID 事务 的 关系型数据库：</p>
+<p>一阶段 prepare 行为：在本地事务中，一并提交业务数据更新和相应回滚日志记录。<br>二阶段 commit 行为：马上成功结束，自动 异步批量清理回滚日志。<br>二阶段 rollback 行为：通过回滚日志，自动 生成补偿操作，完成数据回滚。<br>相应的，TCC 模式，不依赖于底层数据资源的事务支持：</p>
+<p>一阶段 prepare 行为：调用 自定义 的 prepare 逻辑。<br>二阶段 commit 行为：调用 自定义 的 commit 逻辑。<br>二阶段 rollback 行为：调用 自定义 的 rollback 逻辑。<br>所谓 TCC 模式，是指支持把 自定义 的分支事务纳入到全局事务的管理中。</p>
+<p>Saga 模式<br>Saga模式是SEATA提供的长事务解决方案，在Saga模式中，业务流程中每个参与者都提交本地事务，当出现某一个参与者失败则补偿前面已经成功的参与者，一阶段正向服务和二阶段补偿服务都由业务开发实现。</p>
+<p>Saga模式示意图</p>
+<p>理论基础：Hector &amp; Kenneth 发表论⽂ Sagas （1987）</p>
+<p>适用场景：<br>业务流程长、业务流程多<br>参与者包含其它公司或遗留系统服务，无法提供 TCC 模式要求的三个接口<br>优势：<br>一阶段提交本地事务，无锁，高性能<br>事件驱动架构，参与者可异步执行，高吞吐<br>补偿服务易于实现<br>缺点：<br>不保证隔离性（应对方案见用户文档）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.liukewen.cn">kewen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.liukewen.cn/2023/30HTRN0.html">http://blog.liukewen.cn/2023/30HTRN0.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.liukewen.cn" target="_blank">Kewen Blogs</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"><div class="social-share" data-image="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/22DF3P8.html" title="2 SpringCloudGateway 工程搭建"><img class="cover" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">2 SpringCloudGateway 工程搭建</div></div></a></div><div class="next-post pull-right"><a href="/2023/19VK4DY.html" title="3 SpringCloudGateway 路由配置"><img class="cover" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">3 SpringCloudGateway 路由配置</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/WWP21W.html" title="开篇"><img class="cover" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-01</div><div class="title">开篇</div></div></a></div><div><a href="/2024/2GYRYHN.html" title="小技巧方法"><img class="cover" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="title">小技巧方法</div></div></a></div><div><a href="/2023/3SSH5R4.html" title="ConcurentHashMap解析"><img class="cover" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-07</div><div class="title">ConcurentHashMap解析</div></div></a></div><div><a href="/2023/3T6AD2B.html" title="HashMap解析"><img class="cover" src="http://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-07</div><div class="title">HashMap解析</div></div></a></div><div><a href="/2023/1XFF6FX.html" title="反射"><img class="cover" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-07</div><div class="title">反射</div></div></a></div><div><a href="/2023/30AVNCM.html" title="vue"><img class="cover" src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-31</div><div class="title">vue</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">kewen</div><div class="author-info__description">使用Hexo静态部署网站</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%BA%8F%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 序言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Seata-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">2. Seata 是什么?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-AT-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">2.1. AT 模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E5%89%8D%E6%8F%90"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1. 前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-%E6%95%B4%E4%BD%93%E6%9C%BA%E5%88%B6"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2. 整体机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%86%99%E9%9A%94%E7%A6%BB"><span class="toc-number">2.2.</span> <span class="toc-text">2.2. 写隔离</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/27K9TJT.html" title="WebService"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WebService"/></a><div class="content"><a class="title" href="/2024/27K9TJT.html" title="WebService">WebService</a><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/22GPJSD.html" title="状态码"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="状态码"/></a><div class="content"><a class="title" href="/2024/22GPJSD.html" title="状态码">状态码</a><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/3SHHMAN.html" title="网络问题解决"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="网络问题解决"/></a><div class="content"><a class="title" href="/2024/3SHHMAN.html" title="网络问题解决">网络问题解决</a><time datetime="2024-01-11T12:13:31.344Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/3JAVJ2E.html" title="1-数据7层"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="1-数据7层"/></a><div class="content"><a class="title" href="/2024/3JAVJ2E.html" title="1-数据7层">1-数据7层</a><time datetime="2024-01-11T12:13:31.343Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/24SEDF0.html" title="URL-DNS"><img src="https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="URL-DNS"/></a><div class="content"><a class="title" href="/2024/24SEDF0.html" title="URL-DNS">URL-DNS</a><time datetime="2024-01-11T12:13:31.343Z" title="发表于 2024-01-11 20:13:31">2024-01-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By kewen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div></body></html>
