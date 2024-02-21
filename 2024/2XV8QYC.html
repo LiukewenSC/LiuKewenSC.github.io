@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MySQL 锁 | Kewen Blogs</title><meta name="author" content="kewen"><meta name="copyright" content="kewen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="类型引用引用 根据加锁的范围，MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。 全局锁顾名思义，全局锁就是对整个数据库实例加锁。MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。当你需要让整个库处于只读状态的时候，可以使用这个命令，之后其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 锁">
+<meta property="og:url" content="http://blog.liukewen.cn/2024/2XV8QYC.html">
+<meta property="og:site_name" content="Kewen Blogs">
+<meta property="og:description" content="类型引用引用 根据加锁的范围，MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。 全局锁顾名思义，全局锁就是对整个数据库实例加锁。MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。当你需要让整个库处于只读状态的时候，可以使用这个命令，之后其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg">
+<meta property="article:published_time" content="2024-01-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-03T16:11:27.975Z">
+<meta property="article:author" content="kewen">
+<meta property="article:tag" content="Java,Spring,Meven,Spring Security,Web,pve">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg"><link rel="shortcut icon" href="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"><link rel="canonical" href="http://blog.liukewen.cn/2024/2XV8QYC.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-7365518383818279',
+  enable_page_level_ads: 'true'
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?70de8a61e0320eedc798a08b6416cfb3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL 锁',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-04 00:11:27'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('http://storage.blog.liukewen.cn/images/picture/40579.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Kewen Blogs"><img class="site-icon" src="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"/><span class="site-name">Kewen Blogs</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL 锁</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-01-29T16:00:00.000Z" title="发表于 2024-01-30 00:00:00">2024-01-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Mysql/">Mysql</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL 锁"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://time.geekbang.org/column/article/69862">引用</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://time.geekbang.org/column/article/70215">引用</a></p>
+<p>根据加锁的范围，MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。</p>
+<h1 id="全局锁"><a href="#全局锁" class="headerlink" title="全局锁"></a>全局锁</h1><p>顾名思义，全局锁就是对整个数据库实例加锁。MySQL 提供了一个加全局读锁的方法，命令是 <code>Flush tables with read lock (FTWRL)</code>。<br>当你需要让整个库处于只读状态的时候，可以使用这个命令，之后其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修改表结构等）和更新类事务的提交语句。</p>
+<p>全局锁的典型使用场景是，做全库逻辑备份。也就是把整库每个表都 select 出来存成文本或者整库备份</p>
+<p>可能出现的问题：</p>
+<ul>
+<li>如果你在主库上备份，那么在备份期间都不能执行更新，业务基本上就得停摆；</li>
+<li>如果你在从库上备份，那么备份期间从库不能执行主库同步过来的 binlog，会导致主从延迟。</li>
+</ul>
+<p>不加锁的话，备份系统备份的得到的库不是一个逻辑时间点，这个视图是逻辑不一致的。</p>
+<p>说到视图，我们在前面讲事务隔离的时候，其实是有一个方法能够拿到一致性视图的，就是在可重复读隔离级别下开启一个事务。<br>官方自带的逻辑备份工具是 mysqldump。当 mysqldump 使用参数<code>–single-transaction</code> 的时候，导数据之前就会启动一个事务，来确保拿到一致性视图。而由于 MVCC 的支持，这个过程中数据是可以正常更新的。<br><code>single-transaction</code> 方法只适用于所有的表使用事务引擎的库。对于MyIsam则不支持</p>
+<p>既然使用全库只读，为啥不用<code>set global readonly=true</code></p>
+<ul>
+<li>一是，在有些系统中，readonly 的值会被用来做其他逻辑，比如用来判断一个库是主库还是备库。因此，修改 global 变量的方式影响面更大，我不建议你使用。</li>
+<li>二是，在异常处理机制上有差异。如果执行 FTWRL 命令之后由于客户端发生异常断开，那么 MySQL 会自动释放这个全局锁，整个库回到可以正常更新的状态。而将整个库设置为 readonly 之后，如果客户端发生异常，则数据库就会一直保持 readonly 状态，这样会导致整个库长时间处于不可写状态，风险较高。</li>
+</ul>
+<h1 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h1><p>MySQL 里面表级别的锁有两种：一种是表锁，一种是元数据锁（meta data lock，MDL)。</p>
+<h2 id="表锁"><a href="#表锁" class="headerlink" title="表锁"></a>表锁</h2><p>表锁的语法是<code>lock tables … read/write</code>。与 FTWRL 类似，可以用<code>unlock tables</code>主动释放锁，也可以在客户端断开的时候自动释放。需要注意，lock tables 语法除了会限制别的线程的读写外，也限定了线程自身只能执行定义的操作。</p>
+<h2 id="MDL元数据锁"><a href="#MDL元数据锁" class="headerlink" title="MDL元数据锁"></a>MDL元数据锁</h2><p>另一类表级的锁是 MDL（metadata lock)。MDL 不需要显式使用，在访问一个表的时候会被自动加上。MDL 的作用是，保证读写的正确性。<br>在 MySQL 5.5 版本中引入了 MDL，当对一个表做增删改查操作的时候，加 MDL 读锁；<br>当要对表做结构变更操作的时候，加 MDL 写锁。<br>读锁之间不互斥，因此你可以有多个线程同时对一张表增删改查。读写锁之间、写锁之间是互斥的，用来保证变更表结构操作的安全性。因此，如果有两个线程要同时给一个表加字段，其中一个要等另一个执行完才能开始执行。<br><strong>MDL 会直到事务提交才释放</strong></p>
+<h3 id="元数据锁可能导致的阻塞问题及解决"><a href="#元数据锁可能导致的阻塞问题及解决" class="headerlink" title="元数据锁可能导致的阻塞问题及解决"></a>元数据锁可能导致的阻塞问题及解决</h3><h4 id="阻塞问题"><a href="#阻塞问题" class="headerlink" title="阻塞问题"></a>阻塞问题</h4><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://static001.geekbang.org/resource/image/7c/ce/7cf6a3bf90d72d1f0fc156ececdfb0ce.jpg?wh=1142*856">极客时间</a></p>
+<ul>
+<li>session A 先启动，这时候会对表 t 加一个 MDL 读锁。</li>
+<li>session B 需要的也是 MDL 读锁，因此可以正常执行。</li>
+<li>session C 会被 blocked，是因为 session A 的 MDL 读锁还没有释放，而 session C 需要 MDL 写锁，因此只能被阻塞。</li>
+<li>之后所有要在表 t 上新申请 MDL 读锁的请求也会被 session C 阻塞。(因为所有对表的增删改查操作都需要先申请 MDL 读锁，就都被锁住，等于这个表现在完全不可读写了)</li>
+</ul>
+<p>如果某个表上的查询语句频繁，而且客户端有重试机制，也就是说超时后会再起一个新 session 再请求的话，这个库的线程很快就会爆满。<br>你现在明白了，事务中的 MDL 锁，在语句执行开始时申请，但是语句结束后并不会马上释放，而会等到整个事务提交后再释放。</p>
+<h4 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h4><p>首先我们要解决长事务，事务不提交，就会一直占着 MDL 锁。在 MySQL 的 information_schema 库的 innodb_trx 表中，你可以查到当前执行中的事务。如果你要做 DDL 变更的表刚好有长事务在执行，要考虑先暂停 DDL，或者 kill 掉这个长事务。<br>但考虑一下这个场景。如果你要变更的表是一个热点表，虽然数据量不大，但是上面的请求很频繁，而你不得不加个字段，你该怎么做呢？<br>这时候 kill 可能未必管用，因为新的请求马上就来了。比较理想的机制是，在 alter table 语句里面设定等待时间，如果在这个指定的等待时间里面能够拿到 MDL 写锁最好，拿不到也不要阻塞后面的业务语句，先放弃。之后开发人员或者 DBA 再通过重试命令重复这个过程。<br>MariaDB 已经合并了 AliSQL 的这个功能，所以这两个开源分支目前都支持 DDL NOWAIT&#x2F;WAIT n 这个语法。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name NOWAIT <span class="keyword">add</span> <span class="keyword">column</span> ...</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name WAIT N <span class="keyword">add</span> <span class="keyword">column</span> ...</span><br></pre></td></tr></table></figure>
+
+<h1 id="行级锁"><a href="#行级锁" class="headerlink" title="行级锁"></a>行级锁</h1><p>行锁就是针对数据表中行记录的锁。这很好理解，比如事务 A 更新了一行，而这时候事务 B 也要更新同一行，则必须等事务 A 的操作完成后才能进行更新。<br>MyIsam中没有行锁，Innodb中才有，这也是MyISAM被取代的重要原因</p>
+<p>在 InnoDB 事务中，行锁是在需要的时候才加上的，但并不是不需要了就立刻释放，而是要等到事务结束时才释放。<br>如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放。</p>
+<h2 id="死锁和死锁检测"><a href="#死锁和死锁检测" class="headerlink" title="死锁和死锁检测"></a>死锁和死锁检测</h2><p>当并发系统中不同线程出现循环资源依赖，涉及的线程都在等待别的线程释放资源时，就会导致这几个线程都进入无限等待的状态，称为死锁。</p>
+<p><img src="https://static001.geekbang.org/resource/image/4d/52/4d0eeec7b136371b79248a0aed005a52.jpg?wh=1142*856" alt="死锁"></p>
+<p>事务AB相互等待，进入死锁</p>
+<p>解决办法：</p>
+<ul>
+<li>种策略是，直接进入等待，直到超时。这个超时时间可以通过参数 <code>innodb_lock_wait_timeout</code>来设置。</li>
+<li>另一种策略是，发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。设置参数 <code>innodb_deadlock_detect=on</code> ，表示开启这个逻辑。</li>
+</ul>
+<p>正常情况下，我们使用第二种死锁检测的情况</p>
+<h3 id="死锁检测"><a href="#死锁检测" class="headerlink" title="死锁检测"></a>死锁检测</h3><p>在 InnoDB 中，innodb_lock_wait_timeout 的默认值是 50s<br>但是死锁检测也有额外的负担，会增加系统开销；比如所有的事务都是更新同一行的场景，每个新来的都会被阻塞，都会检测是否自己导致死锁，时间复杂度O(n)；<br>假设有 1000 个并发线程要同时更新同一行，那么死锁检测操作就是 100 万这个量级的，最后发现不会死锁，浪费大量的资源；</p>
+<p>解决方案：</p>
+<ul>
+<li>关闭死锁检测</li>
+<li>控制并发数量，减小O(n)的增加<ul>
+<li>应用中注意是否是集群控制，控制好总的连接并发数</li>
+<li>数据库服务端可以增加中间件控制，或者修改源码</li>
+<li>也可以将一行数据变多行，最后统计求和（如电影院票数增加，那么可以设置100条记录，每次单独取一条增加，统计时做求和(但是一般业务里不会单独做这种记录字段，只是举个例子)）</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.liukewen.cn">kewen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.liukewen.cn/2024/2XV8QYC.html">http://blog.liukewen.cn/2024/2XV8QYC.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.liukewen.cn" target="_blank">Kewen Blogs</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/7S2MTZ.html" title="MySQL事务"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MySQL事务</div></div></a></div><div class="next-post pull-right"><a href="/2024/32FYBV4.html" title="群晖docker安装代理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">群晖docker安装代理</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC81OTQwMS8zNTg2Mw=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">kewen</div><div class="author-info__description">努力、进取</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://gitee.com/LiuKewenSc"><i class="fab fa-gitee"></i><span>联系我Gitee</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/liukewensc" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:liukewensc@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Outlook"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">自己的博客网站,使用Hexo搭建的静态网站,本来是搭了自己的博客网站的,奈何维护成本和完善成本太高,还是静态博客好用。用流行的一句话说就是写博客就专注于博客本身</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%94%81"><span class="toc-number">2.</span> <span class="toc-text">全局锁</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A1%A8%E7%BA%A7%E9%94%81"><span class="toc-number">3.</span> <span class="toc-text">表级锁</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E9%94%81"><span class="toc-number">3.1.</span> <span class="toc-text">表锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MDL%E5%85%83%E6%95%B0%E6%8D%AE%E9%94%81"><span class="toc-number">3.2.</span> <span class="toc-text">MDL元数据锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E6%95%B0%E6%8D%AE%E9%94%81%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%E7%9A%84%E9%98%BB%E5%A1%9E%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3"><span class="toc-number">3.2.1.</span> <span class="toc-text">元数据锁可能导致的阻塞问题及解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E9%97%AE%E9%A2%98"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">阻塞问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">解决</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A1%8C%E7%BA%A7%E9%94%81"><span class="toc-number">4.</span> <span class="toc-text">行级锁</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E5%92%8C%E6%AD%BB%E9%94%81%E6%A3%80%E6%B5%8B"><span class="toc-number">4.1.</span> <span class="toc-text">死锁和死锁检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E6%A3%80%E6%B5%8B"><span class="toc-number">4.1.1.</span> <span class="toc-text">死锁检测</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/2V644MW.html" title="openwrt 安装使用openclash">openwrt 安装使用openclash</a><time datetime="2024-02-20T16:00:00.000Z" title="发表于 2024-02-21 00:00:00">2024-02-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/1YZGT3J.html" title="群晖docker安装alist">群晖docker安装alist</a><time datetime="2024-02-19T16:00:00.000Z" title="发表于 2024-02-20 00:00:00">2024-02-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/3180H1Y.html" title="群晖docker安装transmission">群晖docker安装transmission</a><time datetime="2024-02-18T16:00:00.000Z" title="发表于 2024-02-19 00:00:00">2024-02-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/YNTKX3.html" title="群晖docker实现115网盘挂载共享文件夹">群晖docker实现115网盘挂载共享文件夹</a><time datetime="2024-02-18T16:00:00.000Z" title="发表于 2024-02-19 00:00:00">2024-02-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/2HRF4Y2.html" title="centos最小化安装后软件安装">centos最小化安装后软件安装</a><time datetime="2024-02-17T16:00:00.000Z" title="发表于 2024-02-18 00:00:00">2024-02-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By kewen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">欢迎来到我的 <a href="http://blog.liukewen.cn/">博客网站</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(()=>{
+  const loadLivere = () => {
+    if (typeof LivereTower === 'object') window.LivereTower.init()
+    else {
+      (function(d, s) {
+          var j, e = d.getElementsByTagName(s)[0];
+          if (typeof LivereTower === 'function') { return; }
+          j = d.createElement(s);
+          j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+          j.async = true;
+          e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    }
+  }
+
+  if ('Livere' === 'Livere' || !false) {
+    if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+    else loadLivere()
+  } else {
+    window.loadOtherComment = loadLivere
+  }
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

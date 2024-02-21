@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MySQL索引 | Kewen Blogs</title><meta name="author" content="kewen"><meta name="copyright" content="kewen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="索引类型索引的出现是为了提高查询效率，但是实现索引的方式却有很多种，所以这里也就引入了索引模型的概念。可以用于提高读写效率的数据结构很多，这里我先给你介绍三种常见、也比较简单的数据结构，它们分别是哈希表、有序数组和搜索树。 哈希表哈希表是一种以键 - 值（key-value）存储数据的结构，我们只要输入待查找的键即 key，就可以找到其对应的值即 Value不可避免地，多个 key 值经过哈希函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL索引">
+<meta property="og:url" content="http://blog.liukewen.cn/2024/11TE6Q4.html">
+<meta property="og:site_name" content="Kewen Blogs">
+<meta property="og:description" content="索引类型索引的出现是为了提高查询效率，但是实现索引的方式却有很多种，所以这里也就引入了索引模型的概念。可以用于提高读写效率的数据结构很多，这里我先给你介绍三种常见、也比较简单的数据结构，它们分别是哈希表、有序数组和搜索树。 哈希表哈希表是一种以键 - 值（key-value）存储数据的结构，我们只要输入待查找的键即 key，就可以找到其对应的值即 Value不可避免地，多个 key 值经过哈希函数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg">
+<meta property="article:published_time" content="2024-01-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-03T16:11:27.974Z">
+<meta property="article:author" content="kewen">
+<meta property="article:tag" content="Java,Spring,Meven,Spring Security,Web,pve">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg"><link rel="shortcut icon" href="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"><link rel="canonical" href="http://blog.liukewen.cn/2024/11TE6Q4.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-7365518383818279',
+  enable_page_level_ads: 'true'
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?70de8a61e0320eedc798a08b6416cfb3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL索引',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-04 00:11:27'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('http://storage.blog.liukewen.cn/images/picture/40579.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Kewen Blogs"><img class="site-icon" src="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"/><span class="site-name">Kewen Blogs</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL索引</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-01-28T16:00:00.000Z" title="发表于 2024-01-29 00:00:00">2024-01-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Mysql/">Mysql</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL索引"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h1><p>索引的出现是为了提高查询效率，但是实现索引的方式却有很多种，所以这里也就引入了索引模型的概念。<br>可以用于提高读写效率的数据结构很多，这里我先给你介绍三种常见、也比较简单的数据结构，它们分别是<strong>哈希表、有序数组和搜索树</strong>。</p>
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p>哈希表是一种以键 - 值（key-value）存储数据的结构，我们只要输入待查找的键即 key，就可以找到其对应的值即 Value<br>不可避免地，多个 key 值经过哈希函数的换算，会出现同一个值的情况。处理这种情况的一种方法是，拉出一个链表。<br>哈希表这种结构适用于只有等值查询的场景。比如 Memcached 及其他一些 NoSQL 引擎</p>
+<h2 id="有序数组"><a href="#有序数组" class="headerlink" title="有序数组"></a>有序数组</h2><p>而有序数组在等值查询和范围查询场景中的性能好<br>有序数组索引只适用于静态存储引擎。比如你要保存的是 2017 年某个城市的所有人口信息，这类不会再修改的数据。</p>
+<h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><p><img src="https://static001.geekbang.org/resource/image/04/68/04fb9d24065635a6a637c25ba9ddde68.png?wh=1142*856" alt="极客时间，二叉搜索树"></p>
+<p>二叉搜索树的特点是：父节点左子树所有结点的值小于父节点的值，右子树所有结点的值大于父节点的值。<br>这样如果你要查 ID_card_n2 的话，按照图中的搜索顺序就是按照 UserA -&gt; UserC -&gt; UserF -&gt; User2 这个路径得到。这个时间复杂度是 O(log(N))。<br>当然为了维持 O(log(N)) 的查询复杂度，你就需要保持这棵树是平衡二叉树。为了做这个保证，更新的时间复杂度也是 O(log(N))。</p>
+<h2 id="N叉搜索树"><a href="#N叉搜索树" class="headerlink" title="N叉搜索树"></a>N叉搜索树</h2><p>二叉树是搜索效率最高的，但是实际上大多数的数据库存储却并不使用二叉树。其原因是，索引不止存在内存中，还要写到磁盘上。<br>每一次的下钻搜索都需要读一次磁盘IO，当树越高的时候磁盘的IO就会很大，因此会产生磁盘IO瓶颈，对于基于磁盘的一般采用N叉树解决<br>“N 叉”树中的“N”取决于数据块的大小。</p>
+<p><em>以 InnoDB 的一个整数字段索引为例，这个 N 差不多是 1200。这棵树高是 4 的时候，就可以存 1200 的 3 次方个值，这已经 17 亿了。考虑到树根的数据块总是在内存中的，一个 10 亿行的表上一个整数字段的索引，查找一个值最多只需要访问 3 次磁盘。其实，树的第二层也有很大概率在内存中，那么访问磁盘的平均次数就更少了。</em></p>
+<p>N 叉树由于在读写上的性能优点，以及适配磁盘的访问模式，已经被广泛应用在数据库引擎中了。</p>
+<h1 id="InnoDB-索引模型"><a href="#InnoDB-索引模型" class="headerlink" title="InnoDB 索引模型"></a>InnoDB 索引模型</h1><p><img src="https://static001.geekbang.org/resource/image/dc/8d/dcda101051f28502bd5c4402b292e38d.png?wh=1142*856" alt="InnoDB索引结构"></p>
+<ol>
+<li>聚簇索引与非聚簇索引： 聚簇索引包含了所有数据，非聚簇索引至包含了主键ID，需要回表查询其他的数据</li>
+<li>主键索引与非主键索引<ol>
+<li>如果语句是 <code>select * from T where ID=500</code>，即主键查询方式，则只需要搜索 ID 这棵 B+ 树；</li>
+<li>如果语句是 <code>select * from T where k=5</code>，即普通索引查询方式，则需要先搜索 k 索引树，得到 ID 的值为 500，再到 ID 索引树搜索一次。这个过程称为回表。<br> 也就是说，基于非主键索引的查询需要多扫描一棵索引树。因此，我们在应用中应该尽量使用主键查询。</li>
+</ol>
+</li>
+</ol>
+<h1 id="索引维护"><a href="#索引维护" class="headerlink" title="索引维护"></a>索引维护</h1><p>顺序插入，直接在树末尾插入数据，不会使得树进行数据移动等其它操作<br>中间数据插入，需要在树中间插入数据，如果对应位置满了无法再添加，则需要进行页分裂<br>主键长度要小，节点占用的空间小，一个磁块容纳的节点数就越多，B+树层级就越小；因此<strong>一般采用自增主键</strong></p>
+<h1 id="索引查询"><a href="#索引查询" class="headerlink" title="索引查询"></a>索引查询</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://time.geekbang.org/column/article/69636">引用</a></p>
+<p>回表，查询索引中没有包含返回字段的值，则需要再次查询主键索引中的数据，称为回表</p>
+<p>覆盖索引：索引中覆盖了返回字段，包含了返回字段就不用回表从主键索引中查询了</p>
+<p>联合索引左匹配原则</p>
+<p>最左前缀原则</p>
+<p>索引下推：<br>    MySQL5.6之后引入，在索引中存在条件字段时会先索引和判断是否满足，过滤掉不满足的数据记录，减少回表次数<br>    如:<code>select * from tuser where name like &#39;张%&#39; and age=10 and ismale=1;</code><br>    <img src="http://storage.blog.liukewen.cn/kewen/notes/20240130/0c001bf23286b75a9647f14d80c01389.png" alt="索引下推"><br>    图 3 中，在 (name,age) 索引里面我特意去掉了 age 的值，这个过程 InnoDB 并不会去看 age 的值，只是按顺序把“name 第一个字是’张’”的记录一条条取出来回表。因此，需要回表 4 次。<br>    图 4 跟图 3 的区别是，InnoDB 在 (name,age) 索引内部就判断了 age 是否等于 10，对于不等于 10 的记录，直接判断并跳过。在我们的这个例子中，只需要对 ID4、ID5 这两条记录回表取数据判断，就只需要回表 2 次。</p>
+<h1 id="普通索引和唯一索引"><a href="#普通索引和唯一索引" class="headerlink" title="普通索引和唯一索引"></a>普通索引和唯一索引</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://time.geekbang.org/column/article/70848">引用极客时间林晓斌</a></p>
+<p>||普通索引|唯一索引|<br>|—|—|—|<br>|是否重复|可重复|不可重复|<br>|索引逻辑|查询时找到了满足条件的值还会继续找下去，直到找到不满足的值|查找到了满足条件的值则会停止|<br>|数据变更-在内存|修改内存数据|修改内存数据|<br>|数据变更-不在内存| 数据写入 buffer中| 读取磁盘数据，再执行修改|</p>
+<p><strong>索引逻辑：</strong> InnoDB在索引的时候会读取索引树的磁盘快，一般而言，一个块上有上千条数据，而满足条件继续查找和满足条件停止查找，其实对于磁盘来说读取次数基本一致，因此效率差异基本忽略</p>
+<p><strong>数据变更的逻辑：</strong> InnoDB在数据变更的时候会判断数据是否在内存中，如果在内存中的话则直接保存在内存，如果不在内存的话则存在两种情况</p>
+<ol>
+<li>普通索引的情况，如果为普通索引，MySQL不需要判断磁盘的数据，则直接将数据写在<code>change buffer</code>中，待下一次读取数据时将<code>change buffer</code>数据写入磁盘中，MySQL也会定时刷数据到次哦按<br>这里<code>change buffer</code>是一块持久化的空间，在内存中存在，也在磁盘中有拷贝；<br>在写入多的情况下会连续写入<code>change buffer</code>中，减少读磁盘的次数，从而提升效率。</li>
+<li>唯一索引的情况，MySQL因为需要判断数据唯一性，因此不会使用<code>change buffer</code>，而直接读取磁盘的数据进行操作，因此效率会低</li>
+</ol>
+<p>从以上看来，一般情况下，普通索引的效率是优于唯一索引。但是在写完数据之后立马会查询数据的情况下普通索引的<code>change buffer</code>的逻辑反而起了副作用，这时候一般解决就是改成唯一索引或者关掉<code>change buffer</code>。</p>
+<p>关于<code>change buffer</code>是先写内存，在写磁盘，如果写完内存断电了会导致数据不一致吗<br>    其实不会，虽然是只更新内存，但是在事务提交的时候，我们把 <code>change buffer</code> 的操作也记录到 <code>redo log</code> 里了，所以崩溃恢复的时候，<code>change buffer</code> 也能找回来。</p>
+<h1 id="优化器选择索引"><a href="#优化器选择索引" class="headerlink" title="优化器选择索引"></a>优化器选择索引</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://time.geekbang.org/column/article/71173">引用极客时间</a></p>
+<p>优化器选择索引的目的，是找到一个最优的执行方案，并用最小的代价去执行语句。在数据库里面，扫描行数是影响执行代价的因素之一。扫描的行数越少，意味着访问磁盘数据的次数越少，消耗的 CPU 资源越少。<br>当然，扫描行数并不是唯一的判断标准，优化器还会结合是否使用临时表、是否排序等因素进行综合判断。</p>
+<p>优化器选择索引是根据 采样统计、扫描行数预估、是否回表及开销等选择的</p>
+<h2 id="索引分区度"><a href="#索引分区度" class="headerlink" title="索引分区度"></a>索引分区度</h2><p>一个索引上不同的值越多，这个索引的区分度就越好。而一个索引上不同的值的个数，我们称之为“基数”（cardinality）。也就是说，这个基数越大，索引的区分度越好。<br><strong>通俗的说就是索引要选择内容重复度很小的字段</strong>不要选择枚举等只有少数几个的，没有意义。</p>
+<h2 id="采样统计"><a href="#采样统计" class="headerlink" title="采样统计"></a>采样统计</h2><p>MySQL索引的选择是根据统计信息来的，采样统计原理：<br>InnoDB 默认会选择 <strong>N</strong> 个数据页，统计这些页面上的不同值，得到一个平均值，然后乘以这个索引的页面数，就得到了这个索引的基数。<br>统计信息在每次超过表行数的<strong>1&#x2F;M</strong>就会触发，在 MySQL 中，有两种存储索引统计的方式，可以通过设置参数 innodb_stats_persistent 的值来选择：</p>
+<ul>
+<li>设置为 on 的时候，表示统计信息会持久化存储。这时，默认的 <strong>N是20</strong>，<strong>M是10</strong>。</li>
+<li>设置为 off 的时候，表示统计信息只存储在内存中。这时，默认的 <strong>N是8</strong>，<strong>M是16</strong>。</li>
+</ul>
+<p>有时候采用统计的数据不准确，如一个事务开启了一致性视图，那么另一个事务删掉所有数据在新插入数据的话，实际上数据的两个版本都在索引上，要等到第一个事务关闭了才正常。</p>
+<h2 id="扫描行数预估"><a href="#扫描行数预估" class="headerlink" title="扫描行数预估"></a>扫描行数预估</h2><p>根据统计信息，就可以初步预估扫描的行数，然后就自动选择正确的索引，但是MySQL索引有时候会选择扫描行数较多的主键索引或全表扫描，因为普通索引执行了后还是会走主键索引，优化器判断两次扫描的行数比直接走全表扫描或者主键索引开销更大（虽然有时候并不是这样）<br>这种情况就需要优化索引了</p>
+<h2 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h2><ol>
+<li>通过<code>explain</code>命令查到rows的数据比实际差距大，可以执行 <code>analyze table &lt;t&gt;</code>命令重建统计信息</li>
+<li>手动修改SQL引导走正确的索引（不容易写，适用性小）</li>
+<li>强制走某个索引<code>select * from t force index(a) where a between 1 and 1000 and b between 50000 and 100000 order by b limit 1</code>这种也不建议，阿里巴巴开发手册严禁了的</li>
+<li>新建合适的索引，或删掉不需要的索引。</li>
+</ol>
+<h1 id="字符串索引"><a href="#字符串索引" class="headerlink" title="字符串索引"></a>字符串索引</h1><h2 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h2><p>字符串索引典型的就是邮箱、身份证，由于占用空间大，一个索引树节点上能放的数据变少，可能导致当存大量数据的时候出现4层树结构，一般我们不要出现树的层级加深的情况<br>这种场景下我们就需要减小索引的长度</p>
+<p>索引的建立可以是直接索引整个字段，也可以取用前缀建立索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 索引整个字段</span></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">alter</span> <span class="keyword">table</span> SUser <span class="keyword">add</span> index index1(email);</span><br><span class="line"><span class="comment">-- 索引前6个字符</span></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">alter</span> <span class="keyword">table</span> SUser <span class="keyword">add</span> index index2(email(<span class="number">6</span>));</span><br></pre></td></tr></table></figure>
+
+<p>索引前N个字符，建立索引的时候空间占用就变小了。</p>
+<p>但是索引匹配上了还需要通过主键索引再次查找到字段的完整信息然后比对，减小索引会面临问题，</p>
+<ol>
+<li>对于相同的前缀会查询多条数据做匹配，导致多次回表</li>
+<li>对于原本可以通过覆盖索引来避免回表的，由于索引中数据不全， 必须得回表查询信息，导致回表</li>
+</ol>
+<p>因此建立前缀索引需要控制好长度，下面给出一个计算长度的方案</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询到总的不同的值的个数</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="keyword">distinct</span> email) <span class="keyword">as</span> L <span class="keyword">from</span> SUser;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询不同的长度的个数，控制可以接收损失的比例，如5%（用查询出的除以L ） 计算出有多少个不同的数据合适</span></span><br><span class="line"><span class="keyword">select</span> </span><br><span class="line"><span class="built_in">count</span>(<span class="keyword">distinct</span> <span class="keyword">left</span>(email,<span class="number">4</span>)）<span class="keyword">as</span> L4, </span><br><span class="line"><span class="built_in">count</span>(<span class="keyword">distinct</span> <span class="keyword">left</span>(email,<span class="number">5</span>)）<span class="keyword">as</span> L5, </span><br><span class="line"><span class="built_in">count</span>(<span class="keyword">distinct</span> <span class="keyword">left</span>(email,<span class="number">6</span>)）<span class="keyword">as</span> L6, </span><br><span class="line"><span class="built_in">count</span>(<span class="keyword">distinct</span> <span class="keyword">left</span>(email,<span class="number">7</span>)）<span class="keyword">as</span> L7</span><br><span class="line"><span class="comment">-- count(......视实际情况</span></span><br><span class="line"><span class="keyword">from</span> SUser;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>通过以上可以确定出在满足不同数据的情况下前缀多少合适</p>
+<h2 id="倒序索引-和-Hash索引"><a href="#倒序索引-和-Hash索引" class="headerlink" title="倒序索引 和 Hash索引"></a>倒序索引 和 Hash索引</h2><p>在比如身份证这种，前面很长一截都是相同的，因此即使建立前缀索引也无法减小索引长度，这时候可使用<code>倒序索引</code>或<code>crc32()Hash索引</code>来解决</p>
+<ul>
+<li>身份证倒序后得到的数据基本上是不同的</li>
+<li>采用<code>crc32()Hash</code>可以减小长度，并且大部分数据也不相同</li>
+</ul>
+<p>它们的区别，主要体现在以下三个方面：</p>
+<ul>
+<li>从占用的额外空间来看，倒序存储方式在主键索引上，不会消耗额外的存储空间，而 hash 字段方法需要增加一个字段。当然，倒序存储方式使用 4 个字节的前缀长度应该是不够的，如果再长一点，这个消耗跟额外这个 hash 字段也差不多抵消了。</li>
+<li>在 CPU 消耗方面，倒序方式每次写和读的时候，都需要额外调用一次 reverse 函数，而 hash 字段的方式需要额外调用一次 crc32() 函数。如果只从这两个函数的计算复杂度来看的话，reverse 函数额外消耗的 CPU 资源会更小些。</li>
+<li>从查询效率上看，使用 hash 字段方式的查询性能相对更稳定一些。因为 crc32 算出来的值虽然有冲突的概率，但是概率非常小，可以认为每次查询的平均扫描行数接近 1。而倒序存储方式毕竟还是用的前缀索引的方式，也就是说还是会增加扫描行数。</li>
+</ul>
+<p>他们的缺点： 都不支持范围查询</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.liukewen.cn">kewen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.liukewen.cn/2024/11TE6Q4.html">http://blog.liukewen.cn/2024/11TE6Q4.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.liukewen.cn" target="_blank">Kewen Blogs</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/ZAS8CP.html" title="sql关键字用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">sql关键字用法</div></div></a></div><div class="next-post pull-right"><a href="/2024/9VBSN7.html" title="MySQL架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL架构</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC81OTQwMS8zNTg2Mw=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">kewen</div><div class="author-info__description">努力、进取</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://gitee.com/LiuKewenSc"><i class="fab fa-gitee"></i><span>联系我Gitee</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/liukewensc" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:liukewensc@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Outlook"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">自己的博客网站,使用Hexo搭建的静态网站,本来是搭了自己的博客网站的,奈何维护成本和完善成本太高,还是静态博客好用。用流行的一句话说就是写博客就专注于博客本身</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">索引类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84"><span class="toc-number">1.2.</span> <span class="toc-text">有序数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91"><span class="toc-number">1.3.</span> <span class="toc-text">二叉搜索树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#N%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91"><span class="toc-number">1.4.</span> <span class="toc-text">N叉搜索树</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#InnoDB-%E7%B4%A2%E5%BC%95%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">InnoDB 索引模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%BB%B4%E6%8A%A4"><span class="toc-number">3.</span> <span class="toc-text">索引维护</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%AF%A2"><span class="toc-number">4.</span> <span class="toc-text">索引查询</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95%E5%92%8C%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95"><span class="toc-number">5.</span> <span class="toc-text">普通索引和唯一索引</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%99%A8%E9%80%89%E6%8B%A9%E7%B4%A2%E5%BC%95"><span class="toc-number">6.</span> <span class="toc-text">优化器选择索引</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%88%86%E5%8C%BA%E5%BA%A6"><span class="toc-number">6.1.</span> <span class="toc-text">索引分区度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E7%BB%9F%E8%AE%A1"><span class="toc-number">6.2.</span> <span class="toc-text">采样统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%AB%E6%8F%8F%E8%A1%8C%E6%95%B0%E9%A2%84%E4%BC%B0"><span class="toc-number">6.3.</span> <span class="toc-text">扫描行数预估</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96"><span class="toc-number">6.4.</span> <span class="toc-text">索引优化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B4%A2%E5%BC%95"><span class="toc-number">7.</span> <span class="toc-text">字符串索引</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95"><span class="toc-number">7.1.</span> <span class="toc-text">前缀索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%80%92%E5%BA%8F%E7%B4%A2%E5%BC%95-%E5%92%8C-Hash%E7%B4%A2%E5%BC%95"><span class="toc-number">7.2.</span> <span class="toc-text">倒序索引 和 Hash索引</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/2V644MW.html" title="openwrt 安装使用openclash">openwrt 安装使用openclash</a><time datetime="2024-02-20T16:00:00.000Z" title="发表于 2024-02-21 00:00:00">2024-02-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/1YZGT3J.html" title="群晖docker安装alist">群晖docker安装alist</a><time datetime="2024-02-19T16:00:00.000Z" title="发表于 2024-02-20 00:00:00">2024-02-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/3180H1Y.html" title="群晖docker安装transmission">群晖docker安装transmission</a><time datetime="2024-02-18T16:00:00.000Z" title="发表于 2024-02-19 00:00:00">2024-02-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/YNTKX3.html" title="群晖docker实现115网盘挂载共享文件夹">群晖docker实现115网盘挂载共享文件夹</a><time datetime="2024-02-18T16:00:00.000Z" title="发表于 2024-02-19 00:00:00">2024-02-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/2HRF4Y2.html" title="centos最小化安装后软件安装">centos最小化安装后软件安装</a><time datetime="2024-02-17T16:00:00.000Z" title="发表于 2024-02-18 00:00:00">2024-02-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By kewen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">欢迎来到我的 <a href="http://blog.liukewen.cn/">博客网站</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(()=>{
+  const loadLivere = () => {
+    if (typeof LivereTower === 'object') window.LivereTower.init()
+    else {
+      (function(d, s) {
+          var j, e = d.getElementsByTagName(s)[0];
+          if (typeof LivereTower === 'function') { return; }
+          j = d.createElement(s);
+          j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+          j.async = true;
+          e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    }
+  }
+
+  if ('Livere' === 'Livere' || !false) {
+    if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+    else loadLivere()
+  } else {
+    window.loadOtherComment = loadLivere
+  }
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

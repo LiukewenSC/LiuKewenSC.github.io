@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MySQL事务 | Kewen Blogs</title><meta name="author" content="kewen"><meta name="copyright" content="kewen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="事务特性事务特性：ACID（Atomicity 即原子性、Consistency 一致性、Isolation 隔离性、Durability 持久性） 事务可能存在的问题可能出现的问题：脏读（dirty read）、幻读（phantom read）、不可重复读（non-repeatable read）；  脏读：一个事务里出现了其他事务未提交的数据 不可重复读： 一个事务里两次读取的数据不一致（其他">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL事务">
+<meta property="og:url" content="http://blog.liukewen.cn/2024/7S2MTZ.html">
+<meta property="og:site_name" content="Kewen Blogs">
+<meta property="og:description" content="事务特性事务特性：ACID（Atomicity 即原子性、Consistency 一致性、Isolation 隔离性、Durability 持久性） 事务可能存在的问题可能出现的问题：脏读（dirty read）、幻读（phantom read）、不可重复读（non-repeatable read）；  脏读：一个事务里出现了其他事务未提交的数据 不可重复读： 一个事务里两次读取的数据不一致（其他">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg">
+<meta property="article:published_time" content="2024-01-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-03T16:11:27.972Z">
+<meta property="article:author" content="kewen">
+<meta property="article:tag" content="Java,Spring,Meven,Spring Security,Web,pve">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg"><link rel="shortcut icon" href="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"><link rel="canonical" href="http://blog.liukewen.cn/2024/7S2MTZ.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-7365518383818279',
+  enable_page_level_ads: 'true'
+});</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?70de8a61e0320eedc798a08b6416cfb3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL事务',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-04 00:11:27'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('http://storage.blog.liukewen.cn/images/picture/40579.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Kewen Blogs"><img class="site-icon" src="http://storage.blog.liukewen.cn/images/avatar/kewen-logo-0.png"/><span class="site-name">Kewen Blogs</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/photo"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL事务</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-01-28T16:00:00.000Z" title="发表于 2024-01-29 00:00:00">2024-01-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Mysql/">Mysql</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL事务"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="事务特性"><a href="#事务特性" class="headerlink" title="事务特性"></a>事务特性</h1><p>事务特性：ACID（Atomicity 即原子性、Consistency 一致性、Isolation 隔离性、Durability 持久性）</p>
+<h1 id="事务可能存在的问题"><a href="#事务可能存在的问题" class="headerlink" title="事务可能存在的问题"></a>事务可能存在的问题</h1><p>可能出现的问题：脏读（dirty read）、幻读（phantom read）、不可重复读（non-repeatable read）；</p>
+<ul>
+<li>脏读：一个事务里出现了其他事务未提交的数据</li>
+<li>不可重复读： 一个事务里两次读取的数据不一致（其他事务在两次读取数值之间提交了变更）</li>
+<li>幻读：</li>
+</ul>
+<p><strong>不可重复读和幻读的区别：</strong>侧重点不同，不可重复读描述的侧重点是修改操作，而幻读描述的侧重点是添加和删除操作。</p>
+<p>引用：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://cloud.tencent.com/developer/article/1937815">保姆级教程，终于搞懂脏读、幻读和不可重复读了！</a></p>
+<h1 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h1><p>隔离级别：读未提交（read uncommitted）、读已提交（read committed）、可重复读（repeatable read）和串行化（serializable）</p>
+<ul>
+<li>读未提交：一个事务还没提交时，它做的变更就能被别的事务看到。</li>
+<li>读提交：一个事务提交之后，它做的变更才会被其他事务看到。</li>
+<li>可重复读：一个事务执行过程中看到的数据，总是跟这个事务在启动时看到的数据是一致的。当然在可重复读隔离级别下，未提交变更对其他事务也是不可见的。</li>
+<li>串行化读：对于同一行记录，“写”会加“写锁”，“读”会加“读锁”。当出现读写锁冲突的时候，后访问的事务必须等前一个事务执行完成，才能继续执行。</li>
+</ul>
+<p>数据库里面会创建一个视图，访问的时候以视图的逻辑结果为准。<br>“读未提交”隔离级别下，直接返回记录上的最新值，没有视图概念<br>“读已提交”隔离级别下，这个视图是在每个 SQL 语句开始执行的时候创建的<br>“可重复读”隔离级别下，这个视图是在事务启动时创建的，整个事务存在期间都用这个视图<br>“串行化”隔离级别下，直接用加锁的方式来避免并行访问</p>
+<h1 id="事务隔离级别演示"><a href="#事务隔离级别演示" class="headerlink" title="事务隔离级别演示"></a>事务隔离级别演示</h1><p>初始化</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `test`  (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">32</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `age` tinyint UNSIGNED <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `sex` tinyint <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `is_deleted` bit(<span class="number">1</span>) <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> b<span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">  `money` <span class="type">int</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`) <span class="keyword">USING</span> BTREE</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `test` <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;name1&#x27;</span>, <span class="number">11</span>, <span class="number">1</span>, b<span class="string">&#x27;0&#x27;</span>, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+
+<p>下面的可以查看连接情况和事务隔离级别</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> processlist;</span><br><span class="line"># （<span class="number">5.7</span><span class="operator">+</span>版本隔离级别）</span><br><span class="line"><span class="keyword">select</span> @<span class="variable">@global</span>.transaction_isolation,@<span class="variable">@transaction_isolation</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="读未提交-脏读"><a href="#读未提交-脏读" class="headerlink" title="读未提交- 脏读"></a>读未提交- 脏读</h2><p>新建两窗口</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>窗口1</th>
+<th>窗口2</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>set session transaction isolation level read uncommitted;</code><br><code>start transaction;</code><br><code>SELECT money from test where id=1;</code></td>
+<td></td>
+<td>开启隔离级别未提交，启动事务，查询得到money值为100</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td><code>start transaction;</code><br><code>update test set money=101 where id =1;</code></td>
+<td>默认隔离级别可重复读，开启事务，修改money为101</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>SELECT money from test where id=1;</code></td>
+<td></td>
+<td>查询数据得到Money&#x3D;101</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td><code>rollback;</code></td>
+<td>回滚</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>SELECT money from test where id=1;</code></td>
+<td></td>
+<td>查询数据得到Money&#x3D;100</td>
+</tr>
+</tbody></table>
+<p>以上得知：实际上窗口2并没有更新成功，但是窗口1在第二步查询到了修改的脏数据</p>
+<p>完成之后记得提交或回滚窗口1</p>
+<h2 id="读已提交-不可重复读"><a href="#读已提交-不可重复读" class="headerlink" title="读已提交 - 不可重复读"></a>读已提交 - 不可重复读</h2><p>新建两窗口</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>窗口1</th>
+<th>窗口2</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>set session transaction isolation level read committed;</code><br><code>start transaction;</code><br><code>SELECT money from test where id=1;</code></td>
+<td></td>
+<td>开启隔离级别读已提交，启动事务，查询得到money值为100</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td><code>start transaction;</code><br><code>update test set money=101 where id =1;</code></td>
+<td>默认隔离级别可重复读，开启事务，修改money为101</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>SELECT money from test where id=1;</code></td>
+<td></td>
+<td>查询数据得到Money&#x3D;100 未出现脏读</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td><code>commit;</code></td>
+<td>客户端2提交变更</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>SELECT money from test where id=1;</code></td>
+<td></td>
+<td>查询数据得到Money&#x3D;101</td>
+</tr>
+</tbody></table>
+<p>以上得知，窗口1更新了数据，但是窗口2的更新提交之后窗口1查询两次的值不一样，因此不可重复读</p>
+<p>完成之后记得提交或回滚窗口1</p>
+<h2 id="可重复读-幻读"><a href="#可重复读-幻读" class="headerlink" title="可重复读 - 幻读"></a>可重复读 - 幻读</h2><p>插入两条数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `test` <span class="keyword">VALUES</span> (<span class="number">11</span>, <span class="string">&#x27;name11&#x27;</span>, <span class="number">11</span>, <span class="number">1</span>, b<span class="string">&#x27;0&#x27;</span>, <span class="number">100</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `test` <span class="keyword">VALUES</span> (<span class="number">13</span>, <span class="string">&#x27;name13&#x27;</span>, <span class="number">11</span>, <span class="number">1</span>, b<span class="string">&#x27;0&#x27;</span>, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+
+<p>新建两窗口</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>窗口1</th>
+<th>窗口2</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>set session transaction isolation level read committed;</code><br><code>start transaction;</code><br><code>select money from test where id=2</code></td>
+<td></td>
+<td>开启隔离级别读已提交，启动事务，未得到id&#x3D;2的数据</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td><code>start transaction;</code><br><code>INSERT INTO test VALUES (2, &#39;name2&#39;, 11, 1, b&#39;0&#39;, 100);</code><br><code>commit;</code></td>
+<td>默认隔离级别可重复读，开启事务，插入id 为2的数据，并提交</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>SELECT money from test where id=2;</code></td>
+<td></td>
+<td>查询数据未得到id&#x3D;2的数据，说明未出现不可重复读</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>INSERT INTO test VALUES (2, &#39;name2&#39;, 11, 1, b&#39;0&#39;, 100);</code><br><code>SELECT money from test where id=2;</code></td>
+<td></td>
+<td>插入报错<code>Duplicate entry &#39;2&#39; for key &#39;test.PRIMARY&#39;</code>已经存在，窗口1查询没有数据，但是插入数据报已存在，出现了幻读，再次查询仍然没有数据</td>
+</tr>
+</tbody></table>
+<p>幻读主要就是针对数据条数，查询不存在但是插入却有数据，查询数据列表没有数据，但是插入却出现异常</p>
+<p>完成之后记得提交或回滚窗口1</p>
+<h1 id="MVCC-多版本并发控制"><a href="#MVCC-多版本并发控制" class="headerlink" title="MVCC 多版本并发控制"></a>MVCC 多版本并发控制</h1><p>多版本并发控制是InnoDB的产物</p>
+<p>在可重复读隔离级别下，事务在启动的时候就“拍了个快照”。注意，这个快照是基于整库的。实际上并不是把整库备份下来，而是通过事务ID的大小来实现</p>
+<p>InnoDB 里面每个事务有一个唯一的事务 ID，叫作 transaction id。它是在事务开始的时候向 InnoDB 的事务系统申请的，是按申请顺序严格递增的。<br>每次事务更新数据的时候，都会生成一个新的数据版本，并且把 transaction id 赋值给这个数据版本的事务 ID，记为 row trx_id。<br>这样每条数据都得到了个数组修改集，undolog记录了数据的回滚信息；虚线就代表了undolog记录<br><img src="https://static001.geekbang.org/resource/image/68/ed/68d08d277a6f7926a41cc5541d3dfced.png?wh=1142*856" alt="极客时间"></p>
+<p>每个事务查询时只查询事务Id比自己小且已经提交的数据才认可；</p>
+<p>下面是一个图说明这个过程<br>建表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `t` (</span><br><span class="line">  `id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `k` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t(id, k) <span class="keyword">values</span>(<span class="number">1</span>,<span class="number">1</span>),(<span class="number">2</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://static001.geekbang.org/resource/image/82/d6/823acf76e53c0bdba7beab45e72e90d6.png?wh=910*509" alt="流程"><br><img src="https://static001.geekbang.org/resource/image/94/49/9416c310e406519b7460437cb0c5c149.png?wh=1142*856" alt="事务流程"></p>
+<p>我们通过<code>start transcation with consistent snapshot</code>来开启事务</p>
+<ul>
+<li>A 开启事务 版本100</li>
+<li>B开启事务  版本101</li>
+<li>C开启事务  版本102</li>
+<li>C修改  得到数据(1,2) -&gt; 提交</li>
+<li>B修改  得到数据(1,3) -&gt; 提交  这里不是(1,2)的原因是此时需要<strong>读当前读</strong>，防止C的更新丢失</li>
+<li>A查询  得到数据(1,1) A查询还是开事务的时候的数据</li>
+</ul>
+<h2 id="当前读"><a href="#当前读" class="headerlink" title="当前读"></a>当前读</h2><p>读取事务外的最新的数据，就不会严格遵循事MVCC了</p>
+<p>当一个数据需要更新时如<code>update T set a=a+1</code> 这种情况为了保证其他事务的修改不会丢失。<br>如A开启了事务，读到a&#x3D;1,B开启事务修改了a&#x3D;2，然后a 再去修改</p>
+<ul>
+<li>如果A不采用当前读去读最新的数据，那么a&#x3D;a+1 就只能把a从1修改成2，这样就丢失了B的修改</li>
+<li>如果A采用当前读，则当执行update语句时会先读当前的数据也就是B修改过的数据1，在执行a&#x3D;a+1则可以正确显示为2</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.liukewen.cn">kewen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.liukewen.cn/2024/7S2MTZ.html">http://blog.liukewen.cn/2024/7S2MTZ.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.liukewen.cn" target="_blank">Kewen Blogs</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/2B4JRPX.html" title="MySQL日志系统"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MySQL日志系统</div></div></a></div><div class="next-post pull-right"><a href="/2024/2XV8QYC.html" title="MySQL 锁"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL 锁</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC81OTQwMS8zNTg2Mw=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="http://storage.blog.liukewen.cn/images/avatar/badashoutianshi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">kewen</div><div class="author-info__description">努力、进取</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://gitee.com/LiuKewenSc"><i class="fab fa-gitee"></i><span>联系我Gitee</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/liukewensc" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:liukewensc@outlook.com" rel="external nofollow noreferrer" target="_blank" title="Outlook"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">自己的博客网站,使用Hexo搭建的静态网站,本来是搭了自己的博客网站的,奈何维护成本和完善成本太高,还是静态博客好用。用流行的一句话说就是写博客就专注于博客本身</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%89%B9%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">事务特性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">事务可能存在的问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">3.</span> <span class="toc-text">事务隔离级别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E6%BC%94%E7%A4%BA"><span class="toc-number">4.</span> <span class="toc-text">事务隔离级别演示</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E6%9C%AA%E6%8F%90%E4%BA%A4-%E8%84%8F%E8%AF%BB"><span class="toc-number">4.1.</span> <span class="toc-text">读未提交- 脏读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%B7%B2%E6%8F%90%E4%BA%A4-%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB"><span class="toc-number">4.2.</span> <span class="toc-text">读已提交 - 不可重复读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB-%E5%B9%BB%E8%AF%BB"><span class="toc-number">4.3.</span> <span class="toc-text">可重复读 - 幻读</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MVCC-%E5%A4%9A%E7%89%88%E6%9C%AC%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="toc-number">5.</span> <span class="toc-text">MVCC 多版本并发控制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E8%AF%BB"><span class="toc-number">5.1.</span> <span class="toc-text">当前读</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/2V644MW.html" title="openwrt 安装使用openclash">openwrt 安装使用openclash</a><time datetime="2024-02-20T16:00:00.000Z" title="发表于 2024-02-21 00:00:00">2024-02-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/1YZGT3J.html" title="群晖docker安装alist">群晖docker安装alist</a><time datetime="2024-02-19T16:00:00.000Z" title="发表于 2024-02-20 00:00:00">2024-02-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/3180H1Y.html" title="群晖docker安装transmission">群晖docker安装transmission</a><time datetime="2024-02-18T16:00:00.000Z" title="发表于 2024-02-19 00:00:00">2024-02-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/YNTKX3.html" title="群晖docker实现115网盘挂载共享文件夹">群晖docker实现115网盘挂载共享文件夹</a><time datetime="2024-02-18T16:00:00.000Z" title="发表于 2024-02-19 00:00:00">2024-02-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/2HRF4Y2.html" title="centos最小化安装后软件安装">centos最小化安装后软件安装</a><time datetime="2024-02-17T16:00:00.000Z" title="发表于 2024-02-18 00:00:00">2024-02-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By kewen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">欢迎来到我的 <a href="http://blog.liukewen.cn/">博客网站</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(()=>{
+  const loadLivere = () => {
+    if (typeof LivereTower === 'object') window.LivereTower.init()
+    else {
+      (function(d, s) {
+          var j, e = d.getElementsByTagName(s)[0];
+          if (typeof LivereTower === 'function') { return; }
+          j = d.createElement(s);
+          j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+          j.async = true;
+          e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    }
+  }
+
+  if ('Livere' === 'Livere' || !false) {
+    if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+    else loadLivere()
+  } else {
+    window.loadOtherComment = loadLivere
+  }
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
